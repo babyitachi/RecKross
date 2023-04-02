@@ -1,0 +1,6 @@
+__pycache__/
+.vscode/
+.gitgnore
+wandb/
+.ipynb_checkpoints
+ss/
