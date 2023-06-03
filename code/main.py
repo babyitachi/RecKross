@@ -1,5 +1,5 @@
 from imports import *
-from intentRec import IntentRec
+from RecKross import RecKross
 from dataReader import load_data
 from loss import Loss
 from utils import getConfig, getOptimizer, validConfigFields, essentialFields
@@ -38,17 +38,15 @@ def setHyperParams(pars, h_params, n_m, n_u):
     h_params['n_m']=n_m
     return h_params
 
-def getData(path, dataset="ML-100K"):
+def getData(path, dataset="ML-1M"):
      return load_data(path=path, dataset=dataset)
 
 def getModel(params):
-    model = IntentRec(n_u=params['n_u'], n_hid=params['n_hid'], n_dim=params['n_dim'], n_dep=params['n_dep'], k_len=params['k_len'],\
-        n_layers=params['n_layers'], beta=params['beta'], lambda_s=params['lambda_s'], lambda_2=params['lambda_2'], \
-        lambda_kernal=params['lambda_kernal'],lambda_kernal=params['lambda_reg'], lambda_kernal=params['lambda_reg2'],\
-        beta=params['beta'], dropout=params['drop']).to(device)
+    model = RecKross(n_u=params['n_u'], n_hid=params['n_hid'], n_dim=params['n_dim'], n_dep=params['n_dep'], k_len=params['k_len'],\
+         n_layers=params['n_layers'], lambda_s=params['lambda_s'], lambda_2=params['lambda_2'], lambda_kernal=params['lambda_kernal'], dropout=params['drop']).to(device)
     return model
 
-def train(model, train_r, train_m, test_r, test_m, max_epoch_p=100, lr=0.001, tol_p=1e-4, patience_p=10, optim_type='AdamW', device=device, dot_scale=0.5):
+def train(model, train_r, train_m, test_r, test_m, max_epoch_p=100, lr=0.0001, tol_p=1e-4, patience_p=10, optim_type='AdamW', device=device, dot_scale=0.5):
     torch.cuda.empty_cache()
     time_cumulative = time()
     print('.-^-._'*4, 'Training Started', '.-^-._' * 5)
@@ -64,7 +62,6 @@ def train(model, train_r, train_m, test_r, test_m, max_epoch_p=100, lr=0.001, to
         m = torch.Tensor(train_m).double().to(device)
         model.train()
         pred, reg = model(x)
-        model._updateProbs(pred, reg.item())
         loss = Loss().to(device)(pred, reg, m, x, dot_scale)
         loss.backward()
         return loss
