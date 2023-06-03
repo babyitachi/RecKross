@@ -1,8 +1,8 @@
-# RecKross: Optimizing Recommendations with k-Cross Kernel Net
+# Intentions are more than enough: leveraging user-item intent for the Advanced Recommender system, IntentRec
 
 
 ## 1. Introduction
-The proposed RecKross is a kernel-based recommendation algorithm. The proposed model cosists of 1) 2D Kernel layer 2) k-Cross Kernel layer. Achieving state-of-the-art performance on the Movielens-1M and Movielens-100K datasets, moreover giving highly competitive performance on other datasets, beating almost all the existing models.
+The proposed IntnetRec is a neural recommendation algorithm. The proposed model cosists of 1) Intent layer 2) Kernel layer. Achieving state-of-the-art performance on the Movielens-100K and Douban datasets, beating all the existing models.
 
 
 ## 2. Requirements
@@ -10,12 +10,12 @@ The proposed RecKross is a kernel-based recommendation algorithm. The proposed m
 * pytorch
 
 ## 3. Code execturion commands
-1. ./run.sh file_dir_path_of(movielens_1m_dataset.dat) config_file(config.json)
+1. ./run.sh file_dir_path_of(dataset) config_file(config.json)
 
 ## 4. RMSE Results
-- ML-1M: 0.8224
-- ML-100K: 0.8912
-- Douban: 0.7255
+- Douban: 0.7208
+- ML-100K: 0.8858
+- ML-1M: 0.823
 
 
 ## 4. Data References
